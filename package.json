@@ -2,7 +2,7 @@
   "name": "cbco_mentionbot",
   "version": "1.0.0",
   "description": "helps with mentions for helper roles in cbco discord server",
-  "main": "bot.js",
+  "main": "src/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bot.js"
