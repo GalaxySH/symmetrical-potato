@@ -35,7 +35,7 @@ client.on('ready', async () => { // This event will run if the bot starts, and l
     // client.user.setActivity(`no site yet | $help | Serving ${client.guilds.size} servers`);
     client.user.setPresence({
         activity: {
-            name: `for mentions | ${config.prefix}{role}`,
+            name: `for ${config.prefix}{role} | ${config.prefix}help`,
             type: 'WATCHING'
         },
         status: 'online'

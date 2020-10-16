@@ -26,14 +26,14 @@ module.exports = async (message) => {
             message.channel.send({
                 embed: {
                     color: 16711680,
-                    description: `error while reseting access role`
+                    description: `error while resetting access role`
                 }
             }).catch(xlg.error);
         });
 
         return false;
     }
-    if (!message.member.roles.cache.get(config.accessRole)) {
+    if (!message.member.roles.cache.get(config.accessRole) && message.author.id !== config.ownerID) {
         message.channel.send({
             embed: {
                 color: 16711680,
