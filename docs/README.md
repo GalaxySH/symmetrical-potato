@@ -10,10 +10,10 @@ The bot is quite easy to use once you understand it. To start, this bot has a ve
 
 The configuration of the bot is key, and can be the tricky part. Here is a bad diagram of the mapping:
 
-```pseudo
+```yim
 the bot holds a large object of channels that it is configured to use (in CBCo).
-V
-channel (id) -> [set of role shortcuts*] -> role mapped to shortcut
+↓
+channel (id) → [set of role shortcuts*] → role mapped to shortcut
 ```
 
 *"Role shortcuts" are a feature of the bot. When requesting help (`??ping` or `??ping <shortcut>`) the user can supply a shortened name mapped to a certain role that was configured by moderators.
@@ -25,3 +25,11 @@ The two commands normal users would utilize to use the bot are `??ping` and `??l
 `??ping` - it does not require args, but it will only work if the channel it is called in has roles configured.
 
 `??list` - to find out whether roles are configured, send this. if the channel has roles, it will list them, the first item in each line being what needs to be called with `??ping`. **IMPORTANT:** Using `??ping` without args in a configured channel will default to the first role in that list.
+
+<hr>
+
+All other commands at this time are mod only. The mod access role that the bot recognizes can be set using ` ??accessrole <role> `. Using help to find them, send any moderator command for more information or use.
+
+<hr>
+
+Pretty much all of the commands can be viewed using ` ??help `. All commands will give the necessary information for use if you send them without args, unless they are special use, like ??lock.
