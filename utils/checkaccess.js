@@ -6,8 +6,8 @@ module.exports = async (message) => {
     if (!config.accessRole || config.accessRole === "" || config.accessRole === null) {
         message.channel.send({
             embed: {
-                color: 16750899,
-                description: `***WARNING:*** you need to set a new access role! Currently, the bot is completely open to use.`
+                color: config.warn_color,
+                description: `***WARNING:*** you need to set a new access role! Currently, the bot is completely open to use. Set with \`${config.prefix}accessrole\``
             }
         }).catch(xlg.error);
         return true;
@@ -15,20 +15,22 @@ module.exports = async (message) => {
     if (!message.guild.roles.cache.get(config.accessRole)) {
         message.channel.send({
             embed: {
-                color: 16711680,
+                color: config.fail_color,
                 description: `The current access role no longer exists in this guild.`
             }
         }).catch(xlg.error);
         
-        config.accessRole = "";
+        config.accessRole = null;
         fs.writeFile('./config.json', JSON.stringify(config, null, 2), function (err) {
-            if (err) xlg.error(err);
-            message.channel.send({
-                embed: {
-                    color: 16711680,
-                    description: `error while resetting access role`
-                }
-            }).catch(xlg.error);
+            if (err) {
+                xlg.error(err);
+                message.channel.send({
+                    embed: {
+                        color: config.fail_color,
+                        description: `error while resetting access role`
+                    }
+                }).catch(xlg.error);
+            }
         });
 
         return false;
@@ -36,7 +38,7 @@ module.exports = async (message) => {
     if (!message.member.roles.cache.get(config.accessRole) && message.author.id !== config.ownerID) {
         message.channel.send({
             embed: {
-                color: 16711680,
+                color: config.fail_color,
                 description: `${message.member}, you cannot use this command as you are not a(n) ${message.guild.roles.cache.get(config.accessRole) || "@Manager"}.`
             }
         }).catch(xlg.error);
