@@ -5,6 +5,7 @@ module.exports = {
     name: 'list',
     description: 'add a helper role to a channel',
     async execute(client, message, args) {
+        var config = require("../config.json");
         try {
             // check for perms
             if (!(await checkAccess(message))) return;
@@ -33,7 +34,6 @@ module.exports = {
                     }
                 }).catch(xlg.error);
             } else {
-                var config = require("../config.json");
                 return message.channel.send({
                     embed: {
                         color: config.warn_color,
@@ -42,10 +42,11 @@ module.exports = {
                 }).catch(xlg.error);            
             }
         } catch (error) {
+            xlg.error(error);
             message.channel.send({
                 embed: {
                     color: config.fail_color,
-                    description: `This bot is lacking the required permissions.`
+                    description: `**I am lacking the required permissions; I require:**\n*manage messages:* edit reactions\n*view messages [history]:* interact with users\n*send messages:* to fulfill purpose\n*manage roles:* interact with roles\n*mention @everyone, @here, so on:* to mention the unmentionables`
                 }
             }).catch(xlg.error);
         }

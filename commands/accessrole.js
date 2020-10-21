@@ -9,7 +9,7 @@ module.exports = {
     async execute(client, message, args) {
         try {
             // check for perms
-            if (!(await checkAccess(message))) return;
+            if (!(await checkAccess(message, true))) return;
             // show info if no args
             var config = require("../config.json");
             if (args.length < 1) {
@@ -27,6 +27,15 @@ module.exports = {
             if (args.join(" ") === "unset") {
                 config.accessRole = null;
             } else {
+                if (args[0] === "@everyone" || args[0] === "@here") {
+                    message.channel.send({
+                        embed: {
+                            color: config.fail_color,
+                            description: `the access role cannot be @everyone or @here`
+                        }
+                    }).catch(xlg.error);
+                    return false;
+                }
                 // check role args
                 var roleTarget = stringToRole(message.guild, args[0], false, false);
                 if (!roleTarget) {
@@ -71,10 +80,11 @@ module.exports = {
                 }).catch(xlg.error);
             });
         } catch (error) {
+            xlg.error(error);
             message.channel.send({
                 embed: {
                     color: config.fail_color,
-                    description: `This bot is lacking the required permissions.`
+                    description: `**I am lacking the required permissions; I require:**\n*manage messages:* edit reactions\n*view messages [history]:* interact with users\n*send messages:* to fulfill purpose\n*manage roles:* interact with roles\n*mention @everyone, @here, so on:* to mention the unmentionables`
                 }
             }).catch(xlg.error);
         }

@@ -10,7 +10,7 @@ module.exports = {
     async execute(client, message, args) {
         try {
             // check for perms
-            if (!(await checkAccess(message))) return;
+            if (!(await checkAccess(message, true))) return;
             // if no args, send detailed help (args not required)
             if (args.length < 2) {
                 return message.channel.send({
@@ -73,10 +73,11 @@ module.exports = {
                 }
             });
         } catch (error) {
+            xlg.error(error);
             message.channel.send({
                 embed: {
                     color: config.fail_color,
-                    description: `This bot is lacking the required permissions.`
+                    description: `**I am lacking the required permissions; I require:**\n*manage messages:* edit reactions\n*view messages [history]:* interact with users\n*send messages:* to fulfill purpose\n*manage roles:* interact with roles\n*mention @everyone, @here, so on:* to mention the unmentionables`
                 }
             }).catch(xlg.error);
         }

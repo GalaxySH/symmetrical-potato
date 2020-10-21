@@ -9,7 +9,7 @@ module.exports = {
     async execute(client, message, args) {
         try {
             // check for perms
-            if (!(await checkAccess(message))) return;
+            if (!(await checkAccess(message, true))) return;
             // show info if no args
             var config = require("../config.json");
             if (args.length < 1) {
@@ -23,12 +23,22 @@ module.exports = {
 
             var newTime = stringToDuration(args.join(""));
             if (!newTime) {
-                return message.channel.send({
+                message.channel.send({
                     embed: {
                         color: config.fail_color,
-                        description: `new time provided was invalid\n\`NdNhNmNs\``
+                        description: `new queue time provided was invalid\n\`NdNhNmNs\``
                     }
                 }).catch(xlg.error);
+                return;
+            }
+            if (newTime < 60000) {
+                message.channel.send({
+                    embed: {
+                        color: config.fail_color,
+                        description: `new queue time must be >= 60 seconds`
+                    }
+                }).catch(xlg.error);
+                return;
             }
 
             config.queueTime = newTime;
@@ -52,10 +62,11 @@ module.exports = {
                 }).catch(xlg.error);
             });
         } catch (error) {
+            xlg.error(error);
             message.channel.send({
                 embed: {
                     color: config.fail_color,
-                    description: `This bot is lacking the required permissions.`
+                    description: `**I am lacking the required permissions; I require:**\n*manage messages:* edit reactions\n*view messages [history]:* interact with users\n*send messages:* to fulfill purpose\n*manage roles:* interact with roles\n*mention @everyone, @here, so on:* to mention the unmentionables`
                 }
             }).catch(xlg.error);
         }
