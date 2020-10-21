@@ -1,6 +1,6 @@
 {
   "name": "cbco_mentionbot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "helps with mentions for helper roles in cbco discord server",
   "main": "bot.js",
   "scripts": {
