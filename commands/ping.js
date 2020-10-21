@@ -79,7 +79,7 @@ module.exports = {
                 //await new Promise(resolve => setTimeout(resolve, config.queueTime - 60000));
 
                 let confMsg = await message.channel.send({
-                    content: mentionRole,
+                    content: message.author,
                     embed: {
                         color: config.navy_color,
                         title: "Confirm",
