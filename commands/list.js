@@ -1,5 +1,5 @@
 const xlg = require('../xlogger')
-const checkAccess = require('../utils/checkaccess')
+//const checkAccess = require('../utils/checkaccess')
 
 module.exports = {
     name: 'list',
@@ -8,16 +8,7 @@ module.exports = {
         var config = require("../config.json");
         try {
             // check for perms
-            if (!(await checkAccess(message))) return;
-            // if no args, send detailed help (args not required)
-            /*if (args.length < 2) {
-                return message.channel.send({
-                    embed: {
-                        color: config.info_color,
-                        description: `__**Ping Assist: List Helper Roles**__\nUse \` list \` in the channel you wish to see the roles listed for.`
-                    }
-                }).catch(xlg.error);
-            }*/
+            //if (!(await checkAccess(message))) return; // removed perm restrictions because i don't know why they were here in the first place
             args.shift();
             // check for channel
             var hm = require('../helpermaps.json');
