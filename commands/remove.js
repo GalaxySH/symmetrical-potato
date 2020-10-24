@@ -6,7 +6,7 @@ const config = require("../config.json");
 
 module.exports = {
     name: 'remove',
-    description: 'remove a helper role from a channel',
+    description: 'unconfigure a role for the channel',
     async execute(client, message, args) {
         try {
             // check for perms

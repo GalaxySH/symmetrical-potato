@@ -5,7 +5,7 @@ const checkAccess = require('../utils/checkaccess');
 
 module.exports = {
     name: "adjwait",
-    description: "adjust the queue time for mention requests",
+    description: "adjust the timeout until the mention confirmation",
     async execute(client, message, args) {
         try {
             // check for perms

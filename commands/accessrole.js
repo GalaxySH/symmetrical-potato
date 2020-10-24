@@ -5,7 +5,7 @@ const checkAccess = require('../utils/checkaccess')
 
 module.exports = {
     name: "accessrole",
-    description: "set the role to allow access to the bot",
+    description: "set the role for management",
     async execute(client, message, args) {
         try {
             // check for perms

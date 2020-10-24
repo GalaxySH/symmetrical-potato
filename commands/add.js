@@ -6,7 +6,7 @@ const config = require("../config.json");
 
 module.exports = {
     name: 'add',
-    description: 'add a helper role to a channel',
+    description: 'add a role to make mentionable in channel',
     async execute(client, message, args) {
         try {
             // check for perms
