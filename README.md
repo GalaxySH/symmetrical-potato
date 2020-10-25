@@ -1,14 +1,14 @@
 # symmetrical-potato
 
-This project was authored by [ComradeRooskie#6969](https://hauge.rocks) with the help of a friendly Potato.
+This project was authored by [Rooskie](https://hauge.rocks) with the help of a friendly Potato.
 
-This repo hold the core files for a Discord bot that you can find **[with this invite](https://discord.com/oauth2/authorize?client_id=766473369934626827&permissions=268511248&scope=bot&)**. This application was created to fulfill a need on the [CB & Co Discord server](https://discord.gg/UZDMYx5) for a better language-helper-role system, as well as spam protection.
+This repo hold the core files for a Discord bot that you can find **[with this invite](https://discord.com/oauth2/authorize?client_id=766473369934626827&permissions=268511248&scope=bot&)**. This application was created to fulfill a need on the [CBaC Discord server](https://discord.gg/UZDMYx5) for a better role-mentions system, as well as spam protection of such.
 
-**Current Project Status:** *Proposed*
+**Current Project Status:** *waiting on Codec*
 
 ### DEMO | EXAMPLE FILES
 
-Please, check out the demo files (screenshots) for some small examples in [the demo folder](https://github.com/GalaxySH/symmetrical-potato/tree/main/demo_files). Note that the files don't show all features.
+Please, check out the demo files (screenshots) for some small examples in [the demo folder](https://github.com/GalaxySH/symmetrical-potato/tree/main/docs). Note that the files don't show all features.
 
 ### Security
 

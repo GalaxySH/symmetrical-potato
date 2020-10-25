@@ -7,7 +7,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'ping',
     aliases: ["mention"],
-    description: "add a helper mention to the ping queue",
+    description: "use default channel ping or mention a certain role",
     usage: "<name or shortcut of role>",
     cooldown: 1,
     async execute(client, message, args) {

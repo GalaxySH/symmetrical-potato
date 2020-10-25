@@ -3,7 +3,7 @@ const xlg = require('../xlogger')
 
 module.exports = {
     name: 'list',
-    description: 'add a helper role to a channel',
+    description: 'list the mentionable roles set in the channel',
     async execute(client, message, args) {
         var config = require("../config.json");
         try {
