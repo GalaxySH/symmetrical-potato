@@ -16,7 +16,8 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.2"
   },
   "devDependencies": {
     "eslint": "^7.11.0",
@@ -26,5 +27,16 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GalaxySH/symmetrical-potato.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GalaxySH/symmetrical-potato/issues"
+  },
+  "homepage": "https://github.com/GalaxySH/symmetrical-potato#readme"
 }

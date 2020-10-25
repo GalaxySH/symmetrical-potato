@@ -2,12 +2,14 @@ const fs = require('fs')
 const { stringToRole } = require('../utils/parsers')
 const xlg = require('../xlogger')
 const checkAccess = require('../utils/checkaccess')
+const {checkGuildAccessRole} = require('../utils/database')
 
 module.exports = {
     name: "accessrole",
     description: "set the role to allow access to the bot",
     async execute(client, message, args) {
         try {
+            await checkGuildAccessRole(message.channel.guild.id, client.database)
             // check for perms
             if (!(await checkAccess(message, true))) return;
             // show info if no args

@@ -1,5 +1,4 @@
 // This line MUST be first, for discord.js to read the process envs!
-require('dotenv').config()
 const xlg = require('./xlogger')
 process.on('uncaughtException', function (e) {
     xlg.log(e)
@@ -8,6 +7,7 @@ process.on('uncaughtException', function (e) {
 const fs = require('fs')
 const Discord = require('discord.js')
 const config = require('./config.json')
+const {createDatabase} = require('./utils/database')
 const client = new Discord.Client()
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection()
@@ -33,6 +33,8 @@ client.on('ready', async () => { // on start and log in
         },
         status: 'online'
     }).catch(xlg.error)
+    client.database = await createDatabase()
+    // console.log(client.database)
 });
 client.on('message', async message => {// on the reception of any message
     if (message.author.bot) return
