@@ -24,6 +24,7 @@ for (const file of commandFiles) {
     console.log(`${commNumber} - %s$${command.name}%s has been loaded%s`, '\x1b[35m', '\x1b[0m', noName)
     commNumber++
 }
+
 client.on('ready', async () => { // on start and log in
     xlg.log(`${client.user.tag}(${client.user.id}) has started with ${client.users.cache.size} users.`)
     client.user.setPresence({
@@ -34,6 +35,7 @@ client.on('ready', async () => { // on start and log in
         status: 'online'
     }).catch(xlg.error)
 });
+
 client.on('message', async message => {// on the reception of any message
     if (message.author.bot) return
     if (message.system) return
@@ -91,6 +93,7 @@ client.on('message', async message => {// on the reception of any message
         message.reply('error while executing! please ask a mod for help.')
     }
 });
+
 client.on('error', console.error)
 
 client.login(process.env.TOKEN).catch(console.error)

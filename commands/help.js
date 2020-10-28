@@ -3,14 +3,18 @@ const config = require("../config.json");
 
 module.exports = {
     name: "help",
-    description: "get command list",
+    description: "stop, get help",
     async execute(client, message) {
         try {
+            var cmdMap = [];
+            client.commands.forEach(c => {
+                cmdMap.push(`🔹 \`${config.prefix}${c.name}\`\n${c.description}`)
+            })
             message.channel.send({
                 embed: {
                     color: config.navy_color,
                     title: "Server Commands",
-                    description: `🔹 \`${config.prefix}ping\` - use default channel ping or mention a certain role\n🔹 \`${config.prefix}add\` - add a role to make mentionable in channel\n🔹 \`${config.prefix}adjwait\` - adjust the timeout until the mention confirmation\n🔹 \`${config.prefix}list\` - list the mentionable roles set in the channel\n🔹 \`${config.prefix}remove\` - unconfigure a role for the channel\n🔹 \`${config.prefix}accessrole\` - set the role for management\n🔹 \`${config.prefix}lock\` - lock the \`${config.prefix}ping\` command from public access\n🔹 \`${config.prefix}help\` - stop, get help`
+                    description: cmdMap.join("\n")
                 }
             }).catch(xlg.error);
         } catch (error) {
