@@ -23,6 +23,7 @@ for (const file of commandFiles) {
     console.log(`${commNumber} - %s$${command.name}%s has been loaded%s`, '\x1b[35m', '\x1b[0m', noName)
     commNumber++
 }
+
 client.on('ready', async () => { // on start and log in
     xlg.log(`${client.user.tag}(${client.user.id}) has started with ${client.users.cache.size} users.`)
     client.user.setPresence({
@@ -35,6 +36,7 @@ client.on('ready', async () => { // on start and log in
     client.database = await createDatabase().catch(err=>xlg.error(err))
     // console.log(client.database)
 });
+
 client.on('message', async message => {// on the reception of any message
     if (message.author.bot) return
     if (message.system) return
