@@ -2,10 +2,10 @@
   "name": "cbco_mentionbot",
   "version": "2.0.0",
   "description": "helps with mentions for helper roles in cbco discord server",
-  "main": "bot.js",
+  "main": "potato.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot.js"
+    "start": "node potato.js"
   },
   "author": "rooskie",
   "license": "ISC",
