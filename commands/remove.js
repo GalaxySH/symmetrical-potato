@@ -3,6 +3,7 @@ const { stringToRole } = require('../utils/parsers');
 const xlg = require('../xlogger');
 const checkAccess = require('../utils/checkaccess');
 const config = require("../config.json");
+const { removeRoles } = require("../utils/database")
 
 module.exports = {
     name: 'remove',
@@ -15,8 +16,8 @@ module.exports = {
             if (args.length < 2) {
                 return message.channel.send({
                     embed: {
-                        color: config.info_color,
-                        description: `__**Ping Assist: Remove Helper Role**__\nUse \` ${config.prefix}remove <role id> <shortcut name> \` in the channel the helper role is registered in.`
+                        color: parseInt(process.env.INFO_COLOR),
+                        description: `__**Ping Assist: Remove Helper Role**__\nUse \` ${process.env.PREFIX}remove <role id> <shortcut name> \` in the channel the helper role is registered in.`
                     }
                 }).catch(xlg.error);
             }

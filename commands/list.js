@@ -1,10 +1,12 @@
 const xlg = require('../xlogger')
 //const checkAccess = require('../utils/checkaccess')
+const { getRoles }= require('../utils/database')
 
 module.exports = {
     name: 'list',
     description: 'list the mentionable roles set in the channel',
     async execute(client, message, args) {
+        await getRoles(message.guild.id, "", client.database)
         var config = require("../config.json");
         try {
             // check for perms
