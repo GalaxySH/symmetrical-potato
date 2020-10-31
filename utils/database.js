@@ -164,16 +164,13 @@ const getLockedState = async(guildID, db) => {
 /**
  * 
  * @param {string} guildID 
- * @param {string} channelID 
+ * @param {string} channelID
  * @param {Db} db 
  */
-const getRoles = async(guildID, channelID = null, db) => {
+const getRoles = async(guildID, channelID, db) => {
     const Guild = db.collection(guildID)
-    let q = {}
-    if(channelID){
-        q.channelID = channelID
-    } 
-    const channels = Guild.find(q, {$not: {$type: 10}})
+    const channels = await Guild.findOne({"channelID": channelID}, {projection: {_id: 0, "channelID": 0}})
+    if (!channels) return false
     return channels
 }
 
@@ -191,6 +188,7 @@ const removeRoles = async(guildID, channelID, roleAlias, db) => {
     const Channel = await Guild.findOne({
         "channelID": channelID
     })
+    if (!Channel) return 1
     if (!Channel[roleAlias]) return 1
     if (Channel[roleAlias] === Channel.default){
         const set = {"default": ""}
@@ -206,7 +204,7 @@ const removeRoles = async(guildID, channelID, roleAlias, db) => {
         await Guild.updateOne({
             "channelID": channelID
         }, {$unset: set})
-        return 2
+        return 3
     }
 }
 exports.createDatabase = createDatabase

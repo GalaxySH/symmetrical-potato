@@ -37,9 +37,9 @@ module.exports = {
             let roleTarget = stringToRole(message.guild, args[0], false, false);
             args.shift();
             // check for channel
-            const updated = await addRole(message.guild.id, roleTarget.id, message.channel.id, args[0], args[2], client.database).catch(err=>{
+            const updated = await addRole(message.guild.id, roleTarget.id, message.channel.id, args[0], args[1], client.database).catch(err=>{
                 xlg.error(err)
-                message.channel.send({
+                return message.channel.send({
                     embed: {
                         color: parseInt(process.env.FAIL_COLOR),
                         description: `error while applying PingHelper updates`

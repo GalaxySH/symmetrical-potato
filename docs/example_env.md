@@ -1,0 +1,13 @@
+## The .env file should look like this
+```
+TOKEN=a_cool_discord_bot_token
+PREFIX=?!
+OWNER_ID=your_user_id
+INFO_COLOR=37809
+FAIL_COLOR=16711680
+WARN_COLOR=16750899
+NAVY_COLOR=6969
+SUCCESS_COLOR=4437377
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=database_custom_password
+MONGO_INITDB_DATABASE=database_name

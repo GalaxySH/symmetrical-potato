@@ -2,7 +2,7 @@ const { stringToDuration, getFriendlyUptime } = require("../utils/time");
 const xlg = require('../xlogger');
 const checkAccess = require('../utils/checkaccess');
 const { getWaitTime } = require("../utils/database");
-const {editWaitTime} = require("../utils/database")
+const { editWaitTime } = require("../utils/database")
 
 module.exports = {
     name: "adjwait",
