@@ -8,4 +8,4 @@ RUN npm install
 
 COPY . .
 
-CMD ./scripts/wait-for-it.sh mongo:27017 -t 15 -- npm run start
+CMD bash ./scripts/wait-for-it.sh mongo:27017 -t 15 -- npm run start
