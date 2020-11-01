@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const {Db} = require('mongodb')
+//const {Db} = require('mongodb')
 //const accessrole = require('../commands/accessrole');
 const xlg = require('../xlogger');
 /**
@@ -10,24 +10,19 @@ const xlg = require('../xlogger');
  * @returns {Promise<Db>} A mongoDB database if login worked
  */
 const createDatabase = async (UID=null, PASS=null, DB_NAME=null) => {
-    try{
-        const username = UID || process.env.MONGO_INITDB_ROOT_USERNAME
-        const password = PASS || process.env.MONGO_INITDB_ROOT_PASSWORD
-        const database_name = DB_NAME || process.env.MONGO_INITDB_DATABASE
+    const username = UID || process.env.MONGO_INITDB_ROOT_USERNAME;
+    const password = PASS || process.env.MONGO_INITDB_ROOT_PASSWORD;
+    const database_name = DB_NAME || process.env.MONGO_INITDB_DATABASE;
 
-        const URL = `mongodb://${username}:${password}@mongo:27017/?authSource=admin`;
-        const db = await MongoClient.connect(URL, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true
-        })
+    const URL = `mongodb://${username}:${password}@mongo:27017/?authSource=admin`;
+    const db = await MongoClient.connect(URL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+    });
 
-        xlg.log('Connected to database!')
+    xlg.log('Connected to database!');
 
-        return db.db(database_name)
-    }
-    catch(err){
-        throw err;
-    }
+    return db.db(database_name);
 }
 
 /** 

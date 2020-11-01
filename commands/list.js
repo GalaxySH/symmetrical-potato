@@ -1,6 +1,6 @@
-const xlg = require('../xlogger')
+const xlg = require('../xlogger');
 //const checkAccess = require('../utils/checkaccess')
-const { getRoles }= require('../utils/database')
+const { getRoles } = require('../utils/database');
 
 module.exports = {
     name: 'list',

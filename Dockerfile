@@ -1,6 +1,4 @@
-FROM node:12-alpine3.12
-
-RUN apk add --no-cache bash
+FROM node:14
 
 WORKDIR /src
 

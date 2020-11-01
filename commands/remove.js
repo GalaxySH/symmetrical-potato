@@ -1,4 +1,3 @@
-const { stringToRole } = require('../utils/parsers');
 const xlg = require('../xlogger');
 const checkAccess = require('../utils/checkaccess');
 const { removeRoles } = require("../utils/database")

@@ -1,9 +1,8 @@
-const { stringToRole } = require('../utils/parsers')
-const xlg = require('../xlogger')
-const checkAccess = require('../utils/checkaccess')
-const { Client, Message } = require('discord.js')
-const {setAccessRole} = require('../utils/database')
-const {checkGuildAccessRole} = require('../utils/database')
+const { stringToRole } = require('../utils/parsers');
+const xlg = require('../xlogger');
+const checkAccess = require('../utils/checkaccess');
+const { setAccessRole } = require('../utils/database');
+const { checkGuildAccessRole } = require('../utils/database');
 
 module.exports = {
     name: "accessrole",

@@ -1,7 +1,6 @@
 const xlg = require('../xlogger');
 const checkAccess = require('../utils/checkaccess');
-const { Client, Message } = require('discord.js')
-const { lockGuildToggle } = require('../utils/database')
+const { lockGuildToggle } = require('../utils/database');
 
 module.exports = {
     name: "lock",

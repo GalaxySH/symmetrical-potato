@@ -1,7 +1,5 @@
 const xlg = require('../xlogger');
-const fs = require('fs');
 const database = require('./database');
-const { Message } = require('discord.js');
 
 /**
  * 
