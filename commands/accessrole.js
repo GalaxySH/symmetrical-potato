@@ -26,7 +26,7 @@ module.exports = {
                         color: parseInt(process.env.INFO_COLOR),
                         description: `Current AR:\n${(accessRole.accessrole && accessRole.accessrole !== null) ? message.guild.roles.cache.get(accessRole.accessrole) : "none"}`,
                         footer: {
-                            text: `Send '${process.env.PREFIX}acessrole unset' to reset the role`
+                            text: `Send '${process.env.PREFIX}accessrole unset' to reset the role`
                         }
                     }
                 }).catch(xlg.error);
