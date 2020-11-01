@@ -69,9 +69,9 @@ const lockGuildToggle = async (guildID, db) => {
         await GuildMeta.updateOne({
             "guildID": guildID 
             }, {
-                $set: { "locked": true }
+                $set: { "locked": false }
             }, {
-                upsert: false
+                upsert: true
             })
         return false
     }
