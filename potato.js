@@ -1,5 +1,4 @@
 // This line MUST be first, for discord.js to read the process envs!
-require('dotenv').config()
 const xlg = require('./xlogger')
 process.on('uncaughtException', function (e) {
     xlg.log(e)
@@ -7,7 +6,7 @@ process.on('uncaughtException', function (e) {
 })
 const fs = require('fs')
 const Discord = require('discord.js')
-const config = require('./config.json')
+const {createDatabase} = require('./utils/database')
 const client = new Discord.Client()
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection()
@@ -29,11 +28,13 @@ client.on('ready', async () => { // on start and log in
     xlg.log(`${client.user.tag}(${client.user.id}) has started with ${client.users.cache.size} users.`)
     client.user.setPresence({
         activity: {
-            name: `for ${config.prefix}ping | ${config.prefix}help`,
+            name: `for ${process.env.PREFIX}ping | ${process.env.PREFIX}help`,
             type: 'WATCHING'
         },
         status: 'online'
     }).catch(xlg.error)
+    client.database = await createDatabase().catch(err=>xlg.error(err))
+    // console.log(client.database)
 });
 
 client.on('message', async message => {// on the reception of any message
@@ -47,7 +48,7 @@ client.on('message', async message => {// on the reception of any message
 
     const now = Date.now();
 
-    message.gprefix = config.prefix
+    message.gprefix = process.env.PREFIX
     if (message.content.toLowerCase().indexOf(message.gprefix) !== 0) return; // check for absence of prefix
     const args = message.content.slice(message.gprefix.length).trim().split(/ +/g)
 
@@ -93,7 +94,6 @@ client.on('message', async message => {// on the reception of any message
         message.reply('error while executing! please ask a mod for help.')
     }
 });
+client.on('error', xlg.error)
 
-client.on('error', console.error)
-
-client.login(process.env.TOKEN).catch(console.error)
+client.login(process.env.TOKEN).catch(xlg.error)

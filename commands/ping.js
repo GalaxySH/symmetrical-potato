@@ -2,6 +2,7 @@
 const xlg = require('../xlogger');
 const checkAccess = require('../utils/checkaccess')
 const { getFriendlyUptime } = require("../utils/time");
+const db = require('../utils/database')
 const Discord = require("discord.js");
 
 module.exports = {
@@ -12,31 +13,32 @@ module.exports = {
     cooldown: 1,
     async execute(client, message, args) {
         try {
-            var config = require("../config.json");
+            const accessRole = await db.checkGuildAccessRole(message.guild.id, client.database)
+            const locked = await db.getLockedState(message.guild.id, client.database)
+            const waitTime = await db.getWaitTime(message.guild.id, client.database)
             // check for perms
-            if (config.publicLocked && !(await checkAccess(message))) {
+            if (locked && !(await checkAccess(message))) {
                 message.channel.send({
                     embed: {
-                        color: config.fail_color,
-                        description: `Sorry ${message.member}, pings are currently locked. Only ${message.guild.roles.cache.get(config.accessRole) || "@accessrole"} may use this command.`
+                        color: parseInt(process.env.FAIL_COLOR),
+                        description: `Sorry ${message.member}, pings are currently locked. Only ${message.guild.roles.cache.get(accessRole.accessrole) || "@accessrole"} may use this command.`
                     }
                 }).catch(xlg.error);
                 return false;
             }
             // check for roles
             // check for channel
-            var hm = require("../helpermaps.json");
-            if (hm[message.channel.id]) {
-                let helperKeys = Object.keys(hm[message.channel.id]);
+            const roles = await db.getRoles(message.guild.id, message.channel.id, client.database)
+            if (roles) {
                 let mentionRole;
-                if ((!args.length) && Object.values(hm[message.channel.id])[0] && helperKeys[0] !== "" && helperKeys[0] !== null) {
-                    mentionRole = message.guild.roles.cache.get(Object.values(hm[message.channel.id])[0]);
-                } else if (helperKeys.includes(args.join(" "))) {
-                    mentionRole = message.guild.roles.cache.get(hm[message.channel.id][args.join(" ")]);
+                if ((!args.length) && roles.default) {
+                    mentionRole = message.guild.roles.cache.get(roles.default);
+                } else if (roles[args.join(" ")]) {
+                    mentionRole = message.guild.roles.cache.get(roles[args.join(" ")]);
                 } else {
                     return message.channel.send({
                         embed: {
-                            color: config.fail_color,
+                            color: parseInt(process.env.FAIL_COLOR),
                             description: `**No Ping:**\nno roles could be found. a proper helper role could not be found or sent.`
                         }
                     }).catch(xlg.error);
@@ -44,20 +46,20 @@ module.exports = {
                 
                 let qmsg = await message.channel.send({
                     embed: {
-                        color: config.navy_color,
+                        color: parseInt(process.env.NAVY_COLOR),
                         title: "Queued ⏰",
-                        description: `In \` ${getFriendlyUptime(config.queueTime).minutes || 15} \` minute(s) (required wait time) a confirmation will be sent for pinging ${mentionRole}.`,
+                        description: `In \` ${getFriendlyUptime(waitTime).minutes || 15} \` minute(s) (required wait time) a confirmation will be sent for pinging ${mentionRole}.`,
                         timestamp: new Date()
                     }
                 }).catch(xlg.error);
                 await qmsg.react("🚫").catch(xlg.error);
-                const qfilter = (r, u) => r.emoji.name === '🚫' && (u.id === message.author.id || message.guild.members.cache.get(u.id).roles.cache.has(config.accessRole));
-                const qcollected = await qmsg.awaitReactions(qfilter, { max: 1, time: config.queueTime })
+                const qfilter = (r, u) => r.emoji.name === '🚫' && (u.id === message.author.id || message.guild.members.cache.get(u.id).roles.cache.has(accessRole.accessrole));
+                const qcollected = await qmsg.awaitReactions(qfilter, { max: 1, time: waitTime })
                 if (!qcollected || !qcollected.size) {
                     await qmsg.reactions.removeAll().catch(xlg.error);
                     //qmsg.delete().catch(xlg.error);
                 } else {
-                    qmsg.embeds[0].color = config.warn_color;
+                    qmsg.embeds[0].color = parseInt(process.env.WARN_COLOR);
                     qmsg.embeds[0].title = "Aborted";
                     qmsg.embeds[0].description = null;
                     qmsg.embeds[0].timestamp = new Date();
@@ -81,7 +83,7 @@ module.exports = {
                 let confMsg = await message.channel.send({
                     content: message.author,
                     embed: {
-                        color: config.navy_color,
+                        color: parseInt(process.env.NAVY_COLOR),
                         title: "Confirm",
                         description: `Time is up! Still need help?`,
                         timestamp: new Date()
@@ -92,7 +94,7 @@ module.exports = {
                 const filter = (r, u) => r.emoji.name === '✔' && u.id === message.author.id;
                 const collected = await confMsg.awaitReactions(filter, { max: 1, time: 60000 });
                 if (!collected || !collected.size) {
-                    confMsg.embeds[0].color = config.fail_color;
+                    confMsg.embeds[0].color = parseInt(process.env.FAIL_COLOR);
                     confMsg.embeds[0].timestamp = new Date();
                     confMsg.embeds[0].description = "Mention request aborted.";
                     await confMsg.edit(new Discord.MessageEmbed(confMsg.embeds[0])).catch(xlg.error);
@@ -107,7 +109,7 @@ module.exports = {
                     }
                 } else {
                     //message.channel.send(`${mentionRole} | ${message.member} is asking for help above ^^`).catch(xlg.error);
-                    confMsg.embeds[0].color = config.info_color;
+                    confMsg.embeds[0].color = parseInt(process.env.INFO_COLOR)
                     confMsg.embeds[0].title = null;
                     confMsg.embeds[0].timestamp = null;
                     confMsg.embeds[0].description = `${message.author} is requesting help`;
@@ -126,7 +128,7 @@ module.exports = {
             } else {
                 return message.channel.send({
                     embed: {
-                        color: config.fail_color,
+                        color: parseInt(process.env.FAIL_COLOR),
                         description: `**Channel Not Pingable:**\nno helper roles exist for this channel`
                     }
                 }).catch(xlg.error);
@@ -141,7 +143,7 @@ module.exports = {
             xlg.error(error);
             message.channel.send({
                 embed: {
-                    color: config.fail_color,
+                    color: parseInt(process.env.FAIL_COLOR),
                     description: `**I am lacking the required permissions; I require:**\n*manage messages:* edit reactions\n*view messages [history]:* interact with users\n*send messages:* to fulfill purpose\n*manage roles:* interact with roles\n*mention @everyone, @here, so on:* to mention the unmentionables`
                 }
             }).catch(xlg.error);
